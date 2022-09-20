@@ -44,9 +44,9 @@ download_release() {
 
   local arch
   machine=$(uname -m)
-  if [[ $machine == "arm64" ]] || [[ $machine == "aarch64" ]]; then
+  # circleci-cli provides arm64 builds only for Linux. For macOS, fallback to run amd64 arch via Rosetta
+  if [[ $platform == "linux" && ($machine == "arm64" || $machine == "aarch64") ]]; then
     arch="arm64"
-    echo "${TOOL_NAME} does not currently provide ${arch} builds" && exit 1
   elif [[ $machine == *"386"* ]]; then
     arch="386"
     echo "${TOOL_NAME} does not currently provide ${arch} builds" && exit 1
