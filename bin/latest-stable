@@ -4,7 +4,7 @@ set -euo pipefail
 
 query="${1:-}"
 if [ -z "$query" ]; then
-  curl -L -s https://api.github.com/repos/CircleCI-Public/circleci-cli/releases/latest |  grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'
+  curl -L -s https://api.github.com/repos/CircleCI-Public/circleci-cli/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'
 else
   asdf list all circleci "$query" | grep -ivE "(^Available version:|-src|-dev|-latest|-stm|[-\\.]rc|-alpha|-beta|[-\\.]pre|-next|(a|b|c)[0-9]+|snapshot|master)" | sed 's/^[[:space:]]\+//' | tail -1
 fi
